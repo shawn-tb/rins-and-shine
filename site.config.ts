@@ -5,17 +5,17 @@ export const site = {
   name: "Rins & Shine",
   tagline: "Premium Paddle Care System",
   description:
-    "A non-abrasive paddle care system for modern paddle faces. Removes dirt, sweat, oils and debris that interfere with paddle feel and consistency. 100 mL spray plus microfibre cloth.",
+    "A premium paddle care system for pickleball players. Removes sweat, oils, dust and airborne residue from the paddle face without altering its manufactured texture. 100 mL spray plus microfiber cloth.",
 
   // Where the site will live. Update once your domain is pointed at Vercel.
-  url: "https://rinsandshine.com",
+  url: "https://www.rinsnshine.com",
 
   // The address every "Enquire" button writes to.
-  email: "hello@rinsandshine.com",
+  email: "hello@rinsnshine.com",
 
   // Pricing
   price: "S$39",
-  priceNote: "per kit — 100 mL spray + microfibre cloth",
+  priceNote: "per kit — 100 mL spray + microfiber cloth",
   tradeNote: "Distributor, club and bulk pricing on enquiry.",
 
   // Optional: add a URL to switch the social links on. Leave empty to hide.
@@ -24,6 +24,7 @@ export const site = {
 
   origin: "Formulated and Designed in Singapore",
   made: "Made in China",
+  company: "Rins & Shine Pte. Ltd. (Singapore)",
 } as const;
 
 export const mailto = (subject: string) =>

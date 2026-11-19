@@ -7,6 +7,7 @@ import bottleHero from "@/public/img/bottle-hero.webp";
 import kit from "@/public/img/kit.webp";
 import cloth from "@/public/img/cloth.webp";
 import box from "@/public/img/box.webp";
+import boxBack from "@/public/img/box-back.webp";
 
 const ORDER = mailto(`Order enquiry — ${site.name} Paddle Care Kit`);
 const TRADE = mailto(`Distributor enquiry — ${site.name}`);
@@ -170,9 +171,9 @@ export default function Page() {
                 <span className="text-brand-bright">Consistent contact.</span>
               </h1>
               <p className="mt-7 max-w-lg text-base leading-relaxed text-white/70 sm:text-lg">
-                A non-abrasive care system for modern paddle faces. It removes
-                dirt, sweat, oils and debris &mdash; the buildup that quietly
-                changes how your paddle feels from one session to the next.
+                Sweat, oils, dust and airborne particles build up on a paddle
+                face over time. Rins &amp; Shine lifts that residue away without
+                altering the texture the paddle was made with.
               </p>
 
               <div className="mt-9 flex flex-wrap items-center gap-3">
@@ -214,8 +215,8 @@ export default function Page() {
             <ul className="mx-auto grid max-w-6xl grid-cols-2 gap-px px-5 py-2 text-center text-[0.7rem] tracking-[0.14em] text-white/55 uppercase sm:text-xs lg:grid-cols-4 lg:px-8">
               {[
                 "Non-abrasive",
-                "Carbon fibre safe",
-                "100 mL + microfibre cloth",
+                "Carbon fiber safe",
+                "100 mL + microfiber cloth",
                 "Designed in Singapore",
               ].map((t) => (
                 <li key={t} className="px-2 py-4">
@@ -230,16 +231,15 @@ export default function Page() {
         <section id="product" className="scroll-mt-20 bg-paper py-20 lg:py-28">
           <div className="mx-auto max-w-6xl px-5 lg:px-8">
             <div className="max-w-2xl">
-              <Eyebrow>Why the face matters</Eyebrow>
+              <Eyebrow>Understanding surface buildup</Eyebrow>
               <h2 className="font-display text-3xl leading-tight font-semibold tracking-tight sm:text-4xl">
                 A paddle does its work in the top fraction of a millimetre.
               </h2>
               <p className="mt-6 text-base leading-relaxed text-ash sm:text-lg">
-                Carbon fibre weave, raw textures and grit-based finishes grip
-                the ball through surface texture alone. Sweat, skin oils, court
-                dust and ball residue settle into that texture over weeks of
-                play. Rins &amp; Shine lifts the buildup without abrading the
-                face underneath.
+                Over time, sweat, oils, dust and other airborne particles build
+                up on paddle faces. That buildup can obscure the surface
+                texture, reduce spin and alter the consistency of contact, even
+                though the paddle itself is unchanged.
               </p>
             </div>
 
@@ -247,15 +247,15 @@ export default function Page() {
               {[
                 {
                   h: "Non-abrasive",
-                  p: "No scrubbing compounds and no micro-scratching. The formula lifts buildup rather than sanding it away, so you can use it as often as you play.",
+                  p: "No scrubbing compounds and no micro-scratching. It removes foreign contaminants without altering the paddle's manufactured texture, so the surface stays true to its original design.",
                 },
                 {
                   h: "Built for modern faces",
-                  p: "Safe for carbon fibre, composite, polymer and advanced textured or grit-based paddle surfaces, including engineered finishes.",
+                  p: "Made for carbon fiber, composite, polypropylene and textured or grit-based paddle surfaces, including engineered finishes.",
                 },
                 {
-                  h: "Keeps feel consistent",
-                  p: "Clearing the face of surface buildup keeps paddle feel and contact predictable between sessions, instead of drifting week by week.",
+                  h: "Care that supports longevity",
+                  p: "Removing debris properly and keeping the face clean supports a longer paddle service life through maintenance, not modification.",
                 },
               ].map((c) => (
                 <div
@@ -275,7 +275,7 @@ export default function Page() {
           <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 lg:grid-cols-2 lg:gap-16 lg:px-8">
             <Image
               src={kit}
-              alt="The Rins & Shine kit opened: 100 mL care spray beside a folded microfibre cloth in a black presentation box"
+              alt="The Rins & Shine kit opened: 100 mL care spray beside a folded microfiber cloth in a black presentation box"
               sizes="(max-width: 1024px) 88vw, 520px"
               className="mx-auto w-full max-w-[32rem] [filter:drop-shadow(0_26px_34px_rgb(10_10_11/0.22))]"
             />
@@ -290,18 +290,19 @@ export default function Page() {
                     Premium Paddle Care Spray &mdash; 100 mL
                   </dt>
                   <dd className="mt-2 text-sm leading-relaxed text-ash">
-                    A fine mist that loosens dirt, sweat, oils and debris across
-                    the whole face. Light enough that one pass covers a paddle.
+                    Two or three light sprays cover a paddle face. The formula
+                    loosens sweat, oils, dirt and dust so they lift away instead
+                    of settling further into the texture.
                   </dd>
                 </div>
                 <div className="border-t border-ink/10 pt-7">
                   <dt className="font-display text-lg font-semibold">
-                    Microfibre cloth &mdash; 25 &times; 25 cm
+                    Microfiber cloth &mdash; 25 &times; 25 cm
                   </dt>
                   <dd className="mt-2 text-sm leading-relaxed text-ash">
-                    Branded, lint-free and sized for a paddle face. It lifts what
-                    the spray has loosened instead of pushing it back into the
-                    texture.
+                    Branded, lint-free and sized for a paddle face. Smooth and
+                    non-abrasive, which is the only kind of cloth that should
+                    touch a modern paddle.
                   </dd>
                 </div>
                 <div className="border-t border-ink/10 pt-7">
@@ -324,38 +325,61 @@ export default function Page() {
             <div className="max-w-2xl">
               <Eyebrow>How to use it</Eyebrow>
               <h2 className="font-display text-3xl leading-tight font-semibold tracking-tight sm:text-4xl">
-                Thirty seconds after play.
+                Five steps, under a minute.
               </h2>
             </div>
-            <ol className="mt-14 grid gap-10 md:grid-cols-3">
+
+            <ol className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
               {[
-                {
-                  n: "01",
-                  h: "Spray",
-                  p: "Mist lightly across the paddle face, or onto the cloth for a more controlled application.",
-                },
-                {
-                  n: "02",
-                  h: "Wipe",
-                  p: "Work the microfibre cloth over the face in short, overlapping passes, edge to edge.",
-                },
-                {
-                  n: "03",
-                  h: "Dry",
-                  p: "Let the surface dry before you play again. No rinsing and no residue left behind.",
-                },
-              ].map((s) => (
-                <li key={s.n}>
+                ["01", "Shake", "Shake the spray can."],
+                [
+                  "02",
+                  "Spray",
+                  "Apply two to three light sprays onto the paddle face.",
+                ],
+                ["03", "Check", "Make sure the surface is damp before wiping."],
+                [
+                  "04",
+                  "Wipe",
+                  "Wipe gently with a clean microfiber cloth in a circular motion.",
+                ],
+                [
+                  "05",
+                  "Dry",
+                  "Let the paddle air dry completely before play.",
+                ],
+              ].map(([n, h, p]) => (
+                <li key={n} className="border-t border-ink/10 pt-5">
                   <span className="font-display text-sm font-semibold tracking-[0.2em] text-brand">
-                    {s.n}
+                    {n}
                   </span>
-                  <h3 className="mt-4 font-display text-xl font-semibold">
-                    {s.h}
+                  <h3 className="mt-3 font-display text-lg font-semibold">
+                    {h}
                   </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-ash">{s.p}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-ash">{p}</p>
                 </li>
               ))}
             </ol>
+
+            <div className="mt-16 rounded-2xl border border-ink/10 bg-bone/60 p-8 sm:p-10">
+              <h3 className="font-display text-lg font-semibold">
+                Best practice for paddle faces
+              </h3>
+              <ul className="mt-5 grid gap-x-10 gap-y-3 text-sm leading-relaxed text-ash sm:grid-cols-2">
+                {[
+                  "Clean after each play session.",
+                  "Avoid scrubbing or any abrasive material.",
+                  "Use only smooth, non-abrasive microfiber cloths.",
+                  "Keep both the face and the edge clean for more consistent play.",
+                  "Clean gently, to preserve the paddle's surface texture.",
+                ].map((t) => (
+                  <li key={t} className="flex gap-3">
+                    <Check />
+                    <span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </section>
 
@@ -369,11 +393,11 @@ export default function Page() {
               </h2>
               <ul className="mt-9 space-y-4">
                 {[
-                  "Carbon fibre faces, including raw and peel-ply textures",
-                  "Composite and fibreglass faces",
-                  "Polymer surfaces",
-                  "Advanced textured and grit-based finishes",
-                  "Engineered and coated finishes",
+                  "Carbon fiber paddles",
+                  "Composite surface paddles",
+                  "Polypropylene (PP) surface paddles",
+                  "Textured and grit-based surface paddles",
+                  "Engineered finishes",
                 ].map((t) => (
                   <li key={t} className="flex gap-3 text-sm text-white/75">
                     <Check />
@@ -381,10 +405,24 @@ export default function Page() {
                   </li>
                 ))}
               </ul>
-              <p className="mt-8 text-xs leading-relaxed text-white/40">
-                New to a paddle? Test on a small area of the face first, as you
-                would with any care product.
-              </p>
+
+              <h3 className="mt-12 font-display text-lg font-semibold">
+                Safety and handling
+              </h3>
+              <ul className="mt-5 space-y-2.5 text-sm leading-relaxed text-white/60">
+                <li>Pressurised container. Do not puncture or burn.</li>
+                <li>Store below 50&deg;C, away from heat and sunlight.</li>
+                <li>Keep out of reach of children and pets.</li>
+                <li>
+                  Contains water, isopropyl alcohol (&le;15%), poly
+                  dimethylsiloxane, sodium benzoate, citric acid and nitrogen as
+                  propellant.
+                </li>
+                <li>
+                  Expiry: three years from the date of production. See the spray
+                  can.
+                </li>
+              </ul>
             </div>
 
             <div>
@@ -393,8 +431,9 @@ export default function Page() {
                 {[
                   ["Product", "Premium Paddle Care Spray"],
                   ["Net content", "100 mL"],
-                  ["Cloth", "Microfibre, 25 × 25 cm"],
+                  ["Cloth", "Microfiber, 25 × 25 cm"],
                   ["Formula", "Non-abrasive"],
+                  ["Distributed by", site.company],
                   ["Origin", site.origin],
                   ["Manufacture", site.made],
                 ].map(([k, v]) => (
@@ -407,21 +446,41 @@ export default function Page() {
                   </div>
                 ))}
               </dl>
-              <div className="mt-12 grid grid-cols-2 items-center gap-6">
-                <Image
-                  src={cloth}
-                  alt="The branded red microfibre cloth included in the kit"
-                  sizes="(max-width: 1024px) 42vw, 250px"
-                  className="w-full [filter:drop-shadow(0_18px_30px_rgb(0_0_0/0.55))]"
-                />
-                <Image
-                  src={box}
-                  alt="Back of the Rins & Shine retail box listing the product details"
-                  sizes="(max-width: 1024px) 42vw, 250px"
-                  className="w-full [filter:drop-shadow(0_18px_30px_rgb(0_0_0/0.55))]"
-                />
-              </div>
             </div>
+          </div>
+
+          <div className="mx-auto mt-16 max-w-6xl px-5 lg:mt-24 lg:px-8">
+            <ul className="grid grid-cols-1 items-center gap-10 sm:grid-cols-3 sm:gap-8">
+              {[
+                {
+                  src: box,
+                  alt: "Front of the Rins & Shine retail box",
+                  cap: "Retail box, front",
+                },
+                {
+                  src: boxBack,
+                  alt: "Back of the Rins & Shine retail box, listing directions, surface compatibility and safety information",
+                  cap: "Retail box, back",
+                },
+                {
+                  src: cloth,
+                  alt: "The branded red microfiber cloth included in the kit",
+                  cap: "Microfiber cloth, 25 × 25 cm",
+                },
+              ].map((im) => (
+                <li key={im.cap}>
+                  <Image
+                    src={im.src}
+                    alt={im.alt}
+                    sizes="(max-width: 640px) 88vw, 340px"
+                    className="mx-auto w-full max-w-[22rem] [filter:drop-shadow(0_20px_34px_rgb(0_0_0/0.6))]"
+                  />
+                  <p className="mt-5 text-center text-xs tracking-[0.14em] text-white/40 uppercase">
+                    {im.cap}
+                  </p>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -460,7 +519,7 @@ export default function Page() {
                   <p className="mt-2 text-sm text-white/55">{site.priceNote}</p>
                   <ul className="mt-6 space-y-2 text-sm text-white/75">
                     <li>Care spray, 100 mL</li>
-                    <li>Microfibre cloth, 25 × 25 cm</li>
+                    <li>Microfiber cloth, 25 × 25 cm</li>
                     <li>Presentation box</li>
                   </ul>
                 </div>
@@ -480,19 +539,19 @@ export default function Page() {
               {[
                 {
                   q: "Is it safe on a raw carbon face?",
-                  a: "Yes. The formula is non-abrasive and made for carbon fibre, composite, polymer and advanced textured or grit-based surfaces, including engineered finishes.",
+                  a: "Yes. The formula is non-abrasive and made for carbon fiber, composite, polypropylene and textured or grit-based surfaces. It removes contaminants without altering the paddle's manufactured texture.",
                 },
                 {
                   q: "How often should I use it?",
-                  a: "Whenever the face looks dirty or starts to feel slick. Most players wipe down after a session, which takes well under a minute.",
+                  a: "After each play session. That is what the directions call for, and it takes well under a minute.",
                 },
                 {
-                  q: "Which paddle sports is it for?",
-                  a: "It is made for modern paddle faces generally — the same carbon, composite and textured surfaces used across today's paddles.",
+                  q: "Which paddles is it for?",
+                  a: "It is made for modern pickleball paddles, across the carbon, composite and textured surfaces in use today.",
                 },
                 {
                   q: "How long does one bottle last?",
-                  a: "The 100 mL bottle covers months of regular wipe-downs, since each clean needs only a light mist.",
+                  a: "Each clean needs only two or three light sprays, so a 100 mL can covers months of regular use. The can is good for three years from production.",
                 },
                 {
                   q: "Can I buy for a club or shop?",
@@ -526,6 +585,8 @@ export default function Page() {
             <div>
               <Wordmark variant="light" />
               <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/50">
+                {site.company}
+                <br />
                 {site.origin}. {site.made}.
               </p>
             </div>
