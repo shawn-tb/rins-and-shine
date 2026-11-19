@@ -1,114 +1,149 @@
 import Image from "next/image";
-import { site, mailto } from "@/site.config";
+import { site } from "@/site.config";
+import FaqAccordion, { type Faq } from "./faq-accordion";
+import EnquiryForm from "./enquiry-form";
+import {
+  Flame,
+  Shield,
+  Grid,
+  Timer,
+  Droplet,
+  Refresh,
+  Target,
+  Tick,
+  Weave,
+  Layers,
+  Hex,
+  GridLarge,
+  Pin,
+} from "./icons";
 
-import logo from "@/public/img/logo.png";
-import logoWhite from "@/public/img/logo-white.png";
-import bottleHero from "@/public/img/bottle-hero.webp";
-import kit from "@/public/img/kit.webp";
-import cloth from "@/public/img/cloth.webp";
-import box from "@/public/img/box.webp";
-import boxBack from "@/public/img/box-back.webp";
+import bottle from "@/public/img/bottle-hero.webp";
 
-const ORDER = mailto(`Order enquiry — ${site.name} Paddle Care Kit`);
-const TRADE = mailto(`Distributor enquiry — ${site.name}`);
+const WRAP = "mx-auto w-full max-w-[1240px] px-6";
+const PAD = "py-20 sm:py-24 lg:py-28";
+const H2 = "text-[clamp(36px,4vw,54px)] font-extrabold leading-[1.1]";
+const LEAD = "text-[17px] leading-[1.55] text-body";
 
-/* ---------------------------------------------------------------- pieces */
+const NAV = [
+  ["Home", "#home"],
+  ["Benefits", "#benefits"],
+  ["How to use", "#how"],
+  ["Compatibility", "#compat"],
+  ["FAQ", "#faq"],
+  ["Contact", "#contact"],
+] as const;
 
-function Wordmark({
-  variant = "dark",
-  className = "",
-}: {
-  variant?: "dark" | "light";
-  className?: string;
-}) {
-  const src = variant === "light" ? logoWhite : logo;
-  return (
-    <span className={`flex items-center gap-2.5 ${className}`}>
-      <Image
-        src={src}
-        alt=""
-        aria-hidden
-        priority
-        className="h-7 w-auto sm:h-8"
-        style={{ width: "auto" }}
-      />
-      <span className="flex flex-col leading-none">
-        <span className="font-display text-[0.95rem] font-semibold tracking-[0.14em] sm:text-base">
-          RINS &amp; SHINE
-        </span>
-        <span
-          className={`mt-1 text-[0.5rem] tracking-[0.2em] uppercase ${
-            variant === "light" ? "text-white/55" : "text-ash"
-          }`}
-        >
-          Premium Paddle Care
-        </span>
-      </span>
-    </span>
-  );
-}
+const BENEFITS = [
+  {
+    Icon: Shield,
+    h: "Non-Abrasive",
+    p: "Cleans without scrubbing or changing the manufactured texture.",
+  },
+  {
+    Icon: Droplet,
+    h: "Lifts Buildup",
+    p: "Removes sweat, skin oils, dust and airborne particles.",
+  },
+  {
+    Icon: Refresh,
+    h: "Keeps Your Spin",
+    p: "A clear face grips the ball the way it did on day one.",
+  },
+  {
+    Icon: Target,
+    h: "Consistent Contact",
+    p: "No patchy residue, so the same swing gives the same result.",
+  },
+];
 
-function Button({
-  href,
-  children,
-  tone = "brand",
-}: {
-  href: string;
-  children: React.ReactNode;
-  tone?: "brand" | "outline" | "light";
-}) {
-  const tones = {
-    brand:
-      "bg-brand text-white hover:bg-brand-bright focus-visible:outline-brand",
-    outline:
-      "border border-ink/20 text-ink hover:border-ink/50 hover:bg-ink/[0.03] focus-visible:outline-ink",
-    light:
-      "border border-white/25 text-white hover:border-white/60 hover:bg-white/10 focus-visible:outline-white",
-  } as const;
-  return (
-    <a
-      href={href}
-      className={`inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold tracking-wide transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 ${tones[tone]}`}
-    >
-      {children}
-    </a>
-  );
-}
+const CHECKLIST = [
+  "Clean after each play session",
+  "Never scrub or use abrasive materials",
+  "Use only smooth microfiber cloths",
+  "Keep both the face and the edge clean",
+  "Clean gently to preserve the surface texture",
+];
 
-function Eyebrow({
-  children,
-  tone = "brand",
-}: {
-  children: React.ReactNode;
-  tone?: "brand" | "muted";
-}) {
-  return (
-    <p
-      className={`mb-5 text-[0.68rem] font-semibold tracking-[0.22em] uppercase ${
-        tone === "brand" ? "text-brand" : "text-white/50"
-      }`}
-    >
-      {children}
-    </p>
-  );
-}
+const STATS = [
+  {
+    big: "100",
+    unit: "mL",
+    h: "Paddle Care Spray",
+    p: "Shake, mist 2 to 3 light sprays and wipe.",
+  },
+  {
+    big: "25×25",
+    unit: "cm",
+    h: "Microfiber Cloth",
+    p: "Smooth, non-abrasive microfiber with stitched edges.",
+  },
+  {
+    big: "3",
+    unit: "years",
+    h: "Shelf Life",
+    p: "From the date of production, printed on the can.",
+  },
+];
 
-function Check() {
-  return (
-    <svg
-      viewBox="0 0 20 20"
-      className="mt-0.5 h-4 w-4 shrink-0 text-brand"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2.2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <path d="M4 10.5 8 14.5 16 5.5" />
-    </svg>
-  );
-}
+const STEPS = [
+  { h: "Shake", p: "Shake the spray can." },
+  { h: "Spray", p: "2 to 3 light sprays onto the paddle face." },
+  { h: "Check", p: "Make sure the surface is damp." },
+  { h: "Wipe", p: "Gentle circles with a clean microfiber cloth." },
+  { h: "Air Dry", p: "Let it dry completely before play." },
+];
+
+const COMPAT_LEFT = [
+  { Icon: Weave, h: "Carbon Fiber", p: "Safe on carbon fiber paddle faces." },
+  { Icon: Layers, h: "Composite", p: "Safe on composite surface paddles." },
+  {
+    Icon: Hex,
+    h: "Polypropylene (PP)",
+    p: "Safe on polypropylene surface paddles.",
+  },
+];
+
+const COMPAT_RIGHT = [
+  {
+    Icon: GridLarge,
+    h: "Textured & Grit",
+    p: "Advanced textured and grit-based faces keep their bite.",
+  },
+  {
+    Icon: Shield,
+    h: "Maintenance Only",
+    p: "Removes foreign contaminants. It never modifies the surface.",
+  },
+  {
+    Icon: Pin,
+    h: "Formulated in Singapore",
+    p: "Formulated and designed in Singapore.",
+  },
+];
+
+const FAQS: Faq[] = [
+  {
+    q: "Will it change my paddle’s texture or grit?",
+    a: "No. The formula is non-abrasive. It removes foreign contaminants sitting on the surface without altering the texture the paddle was made with.",
+  },
+  {
+    q: "Which paddles can I use it on?",
+    a: "Carbon fiber, composite, polypropylene (PP) and textured or grit-based faces, including engineered finishes.",
+  },
+  {
+    q: "How often should I clean my paddle?",
+    a: "After each play session. A quick clean stops buildup from settling into the texture.",
+  },
+  {
+    q: "What’s in the spray?",
+    a: "Water, isopropyl alcohol (15% or less), polydimethylsiloxane, sodium benzoate, citric acid and nitrogen as the propellant.",
+  },
+  {
+    q: "How should I store it?",
+    a: "It is a pressurised container. Store below 50°C, out of direct sun, away from children and pets, and never puncture or burn it. Shelf life is 3 years from production.",
+  },
+];
 
 /* ------------------------------------------------------------------ page */
 
@@ -116,500 +151,355 @@ export default function Page() {
   return (
     <>
       <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-5 focus:py-2 focus:text-sm focus:text-white"
+        href="#home"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-ink-deep focus:px-5 focus:py-2 focus:text-sm focus:text-white"
       >
         Skip to content
       </a>
 
-      {/* header */}
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-ink/85 text-white backdrop-blur-md">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:h-18 lg:px-8">
-          <a href="#main" aria-label={`${site.name} home`}>
-            <Wordmark variant="light" />
-          </a>
-          <nav className="hidden items-center gap-8 text-sm text-white/70 md:flex">
-            <a className="transition-colors hover:text-white" href="#product">
-              The product
-            </a>
-            <a className="transition-colors hover:text-white" href="#kit">
-              What&rsquo;s inside
-            </a>
-            <a className="transition-colors hover:text-white" href="#use">
-              How to use
-            </a>
-            <a className="transition-colors hover:text-white" href="#faq">
-              FAQ
-            </a>
-          </nav>
+      {/* ---------------------------------------------------------- hero */}
+      <section id="home" className="relative overflow-hidden bg-ink-deep">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(60% 80% at 75% 55%, rgba(215,25,42,0.35), rgba(12,10,11,0) 70%), radial-gradient(40% 60% at 10% 20%, rgba(90,10,18,0.45), rgba(12,10,11,0) 70%)",
+          }}
+        />
+
+        <header className={`relative ${WRAP} flex flex-wrap items-center justify-between gap-5 py-7`}>
           <a
-            href={ORDER}
-            className="rounded-full bg-brand px-4 py-2 text-xs font-semibold tracking-wide text-white transition-colors hover:bg-brand-bright sm:px-5 sm:text-sm"
+            href="#home"
+            className="flex items-center gap-2.5 text-white"
+            aria-label={`${site.name} home`}
           >
-            Enquire
+            <Flame size={34} className="text-accent" />
+            <span className="text-[19px] font-extrabold tracking-[0.02em]">
+              RINS &amp; SHINE
+            </span>
           </a>
-        </div>
-      </header>
+          <nav aria-label="Main" className="flex flex-wrap items-center gap-x-7 gap-y-2">
+            {NAV.map(([t, href]) => (
+              <a
+                key={t}
+                href={href}
+                className="text-[17px] text-white/85 transition-colors hover:text-white"
+              >
+                {t}
+              </a>
+            ))}
+          </nav>
+        </header>
 
-      <main id="main">
-        {/* hero */}
-        <section className="relative overflow-hidden bg-ink text-white">
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -right-40 -top-40 h-[34rem] w-[34rem] rounded-full opacity-25 blur-3xl"
-            style={{
-              background:
-                "radial-gradient(circle, var(--color-brand) 0%, transparent 65%)",
-            }}
-          />
-          <div className="relative mx-auto grid max-w-6xl gap-14 px-5 pt-16 pb-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-10 lg:px-8 lg:pt-24 lg:pb-28">
-            <div>
-              <Eyebrow tone="muted">{site.tagline}</Eyebrow>
-              <h1 className="font-display text-[2.6rem] leading-[1.03] font-semibold tracking-tight sm:text-6xl lg:text-[4.2rem]">
-                Clean surface.
-                <br />
-                <span className="text-brand-bright">Consistent contact.</span>
-              </h1>
-              <p className="mt-7 max-w-lg text-base leading-relaxed text-white/70 sm:text-lg">
-                Sweat, oils, dust and airborne particles build up on a paddle
-                face over time. Rins &amp; Shine lifts that residue away without
-                altering the texture the paddle was made with.
-              </p>
+        <div
+          className={`relative ${WRAP} grid items-center gap-12 pt-10 pb-20 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10 lg:pt-12 lg:pb-28`}
+        >
+          <div>
+            <h1 className="text-[clamp(44px,5.4vw,72px)] leading-[1.08] font-extrabold text-white">
+              <span className="text-accent-bright">Clean</span> Surface,
+              <br />
+              Consistent Contact
+            </h1>
+            <p className="mt-6 max-w-[560px] text-[19px] leading-[1.55] text-white/75">
+              A non-abrasive paddle care spray that lifts sweat, oils and dust
+              off your paddle face, without touching the texture it was made
+              with.
+            </p>
 
-              <div className="mt-9 flex flex-wrap items-center gap-3">
-                <Button href={ORDER}>Enquire to order</Button>
-                <Button href="#product" tone="light">
-                  See the product
-                </Button>
-              </div>
+            <ul className="mt-9 flex flex-wrap gap-y-8 gap-x-[72px]">
+              {[
+                { Icon: Shield, t: "Non-abrasive" },
+                { Icon: Grid, t: "Grit-safe" },
+                { Icon: Timer, t: "Quick clean" },
+              ].map(({ Icon, t }) => (
+                <li key={t} className="flex flex-col items-center gap-3">
+                  <span className="flex h-[72px] w-[72px] items-center justify-center rounded-full border border-accent-bright/45 bg-accent/15">
+                    <Icon size={32} stroke="#FF3B47" />
+                  </span>
+                  <span className="text-[16px] font-semibold text-white">{t}</span>
+                </li>
+              ))}
+            </ul>
 
-              <div className="mt-9 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <span className="font-display text-2xl font-semibold">
-                  {site.price}
-                </span>
-                <span className="text-sm text-white/55">{site.priceNote}</span>
-              </div>
-            </div>
-
-            <div className="relative flex items-end justify-center">
-              <div
-                aria-hidden
-                className="absolute left-1/2 top-1/2 h-[26rem] w-[26rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/25 blur-[100px]"
-              />
-              <div
-                aria-hidden
-                className="absolute bottom-2 left-1/2 h-10 w-56 -translate-x-1/2 rounded-[50%] bg-white/10 blur-2xl"
-              />
-              <Image
-                src={bottleHero}
-                alt="Rins & Shine Premium Paddle Care Spray, 100 mL"
-                priority
-                sizes="(max-width: 1024px) 50vw, 260px"
-                className="relative h-[21rem] w-auto sm:h-[26rem] lg:h-[32rem]"
-              />
-            </div>
+            <a
+              href="#contact"
+              className="mt-9 inline-flex min-h-[52px] items-center rounded-lg bg-accent px-[30px] py-3.5 text-[18px] font-bold text-white transition-colors hover:bg-accent-deep"
+            >
+              Enquire now
+            </a>
           </div>
 
-          {/* trust strip */}
-          <div className="relative border-t border-white/10">
-            <ul className="mx-auto grid max-w-6xl grid-cols-2 gap-px px-5 py-2 text-center text-[0.7rem] tracking-[0.14em] text-white/55 uppercase sm:text-xs lg:grid-cols-4 lg:px-8">
-              {[
-                "Non-abrasive",
-                "Carbon fiber safe",
-                "100 mL + microfiber cloth",
-                "Designed in Singapore",
-              ].map((t) => (
-                <li key={t} className="px-2 py-4">
-                  {t}
+          <div className="flex justify-center">
+            <Image
+              src={bottle}
+              alt="Rins & Shine Premium Paddle Care Spray, 100 mL"
+              priority
+              sizes="(max-width: 1024px) 60vw, 340px"
+              className="h-[22rem] w-auto sm:h-[30rem] lg:h-[37rem]"
+            />
+          </div>
+        </div>
+      </section>
+
+      <main>
+        {/* ----------------------------------------------------- benefits */}
+        <section id="benefits" className={`scroll-mt-4 bg-white ${PAD}`}>
+          <div className={WRAP}>
+            <div className="mx-auto max-w-[760px] text-center">
+              <h2 className={H2}>
+                Paddle care for <span className="text-accent">serious</span>{" "}
+                players
+              </h2>
+              <p className={`mt-5 ${LEAD}`}>
+                Sweat, oils and court dust build up on the paddle face over
+                time. Rins &amp; Shine removes that layer so the surface plays
+                the way it was designed to.
+              </p>
+            </div>
+
+            <ul className="mt-14 grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
+              {BENEFITS.map(({ Icon, h, p }) => (
+                <li
+                  key={h}
+                  className="rounded-2xl bg-white px-7 py-11 text-center shadow-[0_18px_40px_rgba(20,20,22,0.09)]"
+                >
+                  <span className="mx-auto mb-6 flex h-[72px] w-[72px] items-center justify-center rounded-full bg-accent">
+                    <Icon size={34} stroke="#FFFFFF" />
+                  </span>
+                  <h3 className="text-2xl font-bold">{h}</h3>
+                  <p className={`mt-3 ${LEAD}`}>{p}</p>
                 </li>
               ))}
             </ul>
           </div>
         </section>
 
-        {/* the surface */}
-        <section id="product" className="scroll-mt-20 bg-paper py-20 lg:py-28">
-          <div className="mx-auto max-w-6xl px-5 lg:px-8">
-            <div className="max-w-2xl">
-              <Eyebrow>Understanding surface buildup</Eyebrow>
-              <h2 className="font-display text-3xl leading-tight font-semibold tracking-tight sm:text-4xl">
-                A paddle does its work in the top fraction of a millimetre.
+        {/* ---------------------------------------------------- checklist */}
+        <section className={`bg-mist ${PAD}`}>
+          <div className={`${WRAP} grid items-center gap-14 lg:grid-cols-2`}>
+            <div>
+              <h2 className={H2}>
+                Play <span className="text-accent">hard...</span> and keep your
+                paddle like new
               </h2>
-              <p className="mt-6 text-base leading-relaxed text-ash sm:text-lg">
-                Over time, sweat, oils, dust and other airborne particles build
-                up on paddle faces. That buildup can obscure the surface
-                texture, reduce spin and alter the consistency of contact, even
-                though the paddle itself is unchanged.
+              <p className={`mt-5 max-w-[560px] ${LEAD}`}>
+                The paddle itself doesn&rsquo;t wear out after a few weeks. The
+                surface just gets covered. A quick clean after each session
+                keeps it playing true.
+              </p>
+              <ul className="mt-9 flex flex-col gap-4">
+                {CHECKLIST.map((t) => (
+                  <li key={t} className="flex items-center gap-4">
+                    <span className="flex h-7 w-7 flex-none items-center justify-center rounded-md bg-accent">
+                      <Tick size={18} stroke="#FFFFFF" />
+                    </span>
+                    <span className="text-[17px] text-ink">{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="flex justify-center">
+              <Image
+                src={bottle}
+                alt=""
+                aria-hidden
+                sizes="(max-width: 1024px) 55vw, 320px"
+                className="h-[20rem] w-auto rotate-[-12deg] sm:h-[26rem] lg:h-[30rem]"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* -------------------------------------------------- big numbers */}
+        <section className={`bg-white ${PAD}`}>
+          <div className={WRAP}>
+            <div className="mx-auto max-w-[760px] text-center">
+              <h2 className={H2}>
+                Everything You Need in{" "}
+                <span className="text-accent">One Kit</span>
+              </h2>
+              <p className={`mt-4 ${LEAD}`}>
+                Spray and cloth, packed in a black gift box
               </p>
             </div>
-
-            <div className="mt-14 grid gap-6 md:grid-cols-3">
-              {[
-                {
-                  h: "Non-abrasive",
-                  p: "No scrubbing compounds and no micro-scratching. It removes foreign contaminants without altering the paddle's manufactured texture, so the surface stays true to its original design.",
-                },
-                {
-                  h: "Built for modern faces",
-                  p: "Made for carbon fiber, composite, polypropylene and textured or grit-based paddle surfaces, including engineered finishes.",
-                },
-                {
-                  h: "Care that supports longevity",
-                  p: "Removing debris properly and keeping the face clean supports a longer paddle service life through maintenance, not modification.",
-                },
-              ].map((c) => (
-                <div
-                  key={c.h}
-                  className="rounded-2xl border border-ink/10 bg-bone/60 p-7"
-                >
-                  <h3 className="font-display text-lg font-semibold">{c.h}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-ash">{c.p}</p>
-                </div>
+            <ul className="mt-14 grid gap-12 text-center sm:grid-cols-3 sm:gap-8">
+              {STATS.map((s) => (
+                <li key={s.h}>
+                  <p className="flex items-baseline justify-center gap-2 text-accent">
+                    <span className="text-[clamp(56px,7vw,104px)] leading-none font-extrabold">
+                      {s.big}
+                    </span>
+                    <span className="text-[clamp(20px,2.4vw,36px)] font-bold">
+                      {s.unit}
+                    </span>
+                  </p>
+                  <h3 className="mt-5 text-2xl font-bold">{s.h}</h3>
+                  <p className={`mx-auto mt-3 max-w-[320px] ${LEAD}`}>{s.p}</p>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </section>
 
-        {/* what's inside */}
-        <section id="kit" className="scroll-mt-20 bg-bone py-20 lg:py-28">
-          <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 lg:grid-cols-2 lg:gap-16 lg:px-8">
-            <Image
-              src={kit}
-              alt="The Rins & Shine kit opened: 100 mL care spray beside a folded microfiber cloth in a black presentation box"
-              sizes="(max-width: 1024px) 88vw, 520px"
-              className="mx-auto w-full max-w-[32rem] [filter:drop-shadow(0_26px_34px_rgb(10_10_11/0.22))]"
-            />
-            <div>
-              <Eyebrow>What&rsquo;s inside</Eyebrow>
-              <h2 className="font-display text-3xl leading-tight font-semibold tracking-tight sm:text-4xl">
-                Two pieces. Nothing else to buy.
-              </h2>
-              <dl className="mt-9 space-y-7">
-                <div className="border-t border-ink/10 pt-7">
-                  <dt className="font-display text-lg font-semibold">
-                    Premium Paddle Care Spray &mdash; 100 mL
-                  </dt>
-                  <dd className="mt-2 text-sm leading-relaxed text-ash">
-                    Two or three light sprays cover a paddle face. The formula
-                    loosens sweat, oils, dirt and dust so they lift away instead
-                    of settling further into the texture.
-                  </dd>
-                </div>
-                <div className="border-t border-ink/10 pt-7">
-                  <dt className="font-display text-lg font-semibold">
-                    Microfiber cloth &mdash; 25 &times; 25 cm
-                  </dt>
-                  <dd className="mt-2 text-sm leading-relaxed text-ash">
-                    Branded, lint-free and sized for a paddle face. Smooth and
-                    non-abrasive, which is the only kind of cloth that should
-                    touch a modern paddle.
-                  </dd>
-                </div>
-                <div className="border-t border-ink/10 pt-7">
-                  <dt className="font-display text-lg font-semibold">
-                    Presentation box
-                  </dt>
-                  <dd className="mt-2 text-sm leading-relaxed text-ash">
-                    Both pieces seated in a rigid black box &mdash; it travels in
-                    a bag and gives well as a gift.
-                  </dd>
-                </div>
-              </dl>
-            </div>
-          </div>
-        </section>
-
-        {/* how to use */}
-        <section id="use" className="scroll-mt-20 bg-paper py-20 lg:py-28">
-          <div className="mx-auto max-w-6xl px-5 lg:px-8">
-            <div className="max-w-2xl">
-              <Eyebrow>How to use it</Eyebrow>
-              <h2 className="font-display text-3xl leading-tight font-semibold tracking-tight sm:text-4xl">
-                Five steps, under a minute.
-              </h2>
-            </div>
-
-            <ol className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
-              {[
-                ["01", "Shake", "Shake the spray can."],
-                [
-                  "02",
-                  "Spray",
-                  "Apply two to three light sprays onto the paddle face.",
-                ],
-                ["03", "Check", "Make sure the surface is damp before wiping."],
-                [
-                  "04",
-                  "Wipe",
-                  "Wipe gently with a clean microfiber cloth in a circular motion.",
-                ],
-                [
-                  "05",
-                  "Dry",
-                  "Let the paddle air dry completely before play.",
-                ],
-              ].map(([n, h, p]) => (
-                <li key={n} className="border-t border-ink/10 pt-5">
-                  <span className="font-display text-sm font-semibold tracking-[0.2em] text-brand">
-                    {n}
+        {/* ------------------------------------------------------- how to */}
+        <section id="how" className={`scroll-mt-4 bg-mist ${PAD}`}>
+          <div className={WRAP}>
+            <h2 className={`${H2} text-center`}>
+              How to <span className="text-accent">Use</span>
+            </h2>
+            <ol className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+              {STEPS.map((s, i) => (
+                <li
+                  key={s.h}
+                  className="rounded-2xl bg-white px-6 py-9 text-center"
+                >
+                  <span className="mx-auto mb-5 flex h-11 w-11 items-center justify-center rounded-full bg-accent text-[17px] font-bold text-white">
+                    {i + 1}
                   </span>
-                  <h3 className="mt-3 font-display text-lg font-semibold">
-                    {h}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-ash">{p}</p>
+                  <h3 className="text-xl font-bold">{s.h}</h3>
+                  <p className={`mt-2 ${LEAD}`}>{s.p}</p>
                 </li>
               ))}
             </ol>
-
-            <div className="mt-16 rounded-2xl border border-ink/10 bg-bone/60 p-8 sm:p-10">
-              <h3 className="font-display text-lg font-semibold">
-                Best practice for paddle faces
-              </h3>
-              <ul className="mt-5 grid gap-x-10 gap-y-3 text-sm leading-relaxed text-ash sm:grid-cols-2">
-                {[
-                  "Clean after each play session.",
-                  "Avoid scrubbing or any abrasive material.",
-                  "Use only smooth, non-abrasive microfiber cloths.",
-                  "Keep both the face and the edge clean for more consistent play.",
-                  "Clean gently, to preserve the paddle's surface texture.",
-                ].map((t) => (
-                  <li key={t} className="flex gap-3">
-                    <Check />
-                    <span>{t}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
           </div>
         </section>
 
-        {/* compatibility + specs */}
-        <section className="bg-ink py-20 text-white lg:py-28">
-          <div className="mx-auto grid max-w-6xl gap-14 px-5 lg:grid-cols-2 lg:gap-20 lg:px-8">
-            <div>
-              <Eyebrow tone="muted">Surface compatibility</Eyebrow>
-              <h2 className="font-display text-3xl leading-tight font-semibold tracking-tight sm:text-4xl">
-                Engineered for modern paddle surfaces.
+        {/* ------------------------------------------------ compatibility */}
+        <section id="compat" className={`scroll-mt-4 bg-white ${PAD}`}>
+          <div className={WRAP}>
+            <div className="mx-auto max-w-[820px] text-center">
+              <h2 className={H2}>
+                <span className="text-accent">Surface</span> Compatibility
               </h2>
-              <ul className="mt-9 space-y-4">
-                {[
-                  "Carbon fiber paddles",
-                  "Composite surface paddles",
-                  "Polypropylene (PP) surface paddles",
-                  "Textured and grit-based surface paddles",
-                  "Engineered finishes",
-                ].map((t) => (
-                  <li key={t} className="flex gap-3 text-sm text-white/75">
-                    <Check />
-                    <span>{t}</span>
+              <p className={`mt-4 ${LEAD}`}>
+                Engineered for modern paddle surfaces, including engineered
+                finishes.
+              </p>
+            </div>
+
+            <div className="mt-14 grid items-center gap-12 lg:grid-cols-[1fr_auto_1fr] lg:gap-10">
+              <ul className="flex flex-col gap-12 lg:text-right">
+                {COMPAT_LEFT.map(({ Icon, h, p }) => (
+                  <li key={h}>
+                    <span className="inline-flex text-accent lg:justify-end">
+                      <Icon size={44} stroke="currentColor" />
+                    </span>
+                    <h3 className="mt-3 text-2xl font-bold">{h}</h3>
+                    <p className={`mt-2 ${LEAD}`}>{p}</p>
                   </li>
                 ))}
               </ul>
 
-              <h3 className="mt-12 font-display text-lg font-semibold">
-                Safety and handling
-              </h3>
-              <ul className="mt-5 space-y-2.5 text-sm leading-relaxed text-white/60">
-                <li>Pressurised container. Do not puncture or burn.</li>
-                <li>Store below 50&deg;C, away from heat and sunlight.</li>
-                <li>Keep out of reach of children and pets.</li>
-                <li>
-                  Contains water, isopropyl alcohol (&le;15%), poly
-                  dimethylsiloxane, sodium benzoate, citric acid and nitrogen as
-                  propellant.
-                </li>
-                <li>
-                  Expiry: three years from the date of production. See the spray
-                  can.
-                </li>
+              <div className="flex justify-center">
+                <Image
+                  src={bottle}
+                  alt=""
+                  aria-hidden
+                  sizes="(max-width: 1024px) 50vw, 300px"
+                  className="h-[22rem] w-auto sm:h-[28rem] lg:h-[32rem]"
+                />
+              </div>
+
+              <ul className="flex flex-col gap-12">
+                {COMPAT_RIGHT.map(({ Icon, h, p }) => (
+                  <li key={h}>
+                    <span className="inline-flex text-accent">
+                      <Icon size={44} stroke="currentColor" />
+                    </span>
+                    <h3 className="mt-3 text-2xl font-bold">{h}</h3>
+                    <p className={`mt-2 ${LEAD}`}>{p}</p>
+                  </li>
+                ))}
               </ul>
             </div>
-
-            <div>
-              <Eyebrow tone="muted">Specification</Eyebrow>
-              <dl className="mt-2 text-sm">
-                {[
-                  ["Product", "Premium Paddle Care Spray"],
-                  ["Net content", "100 mL"],
-                  ["Cloth", "Microfiber, 25 × 25 cm"],
-                  ["Formula", "Non-abrasive"],
-                  ["Distributed by", site.company],
-                  ["Origin", site.origin],
-                  ["Manufacture", site.made],
-                ].map(([k, v]) => (
-                  <div
-                    key={k}
-                    className="flex justify-between gap-6 border-b border-white/10 py-4"
-                  >
-                    <dt className="text-white/45">{k}</dt>
-                    <dd className="text-right text-white/90">{v}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-          </div>
-
-          <div className="mx-auto mt-16 max-w-6xl px-5 lg:mt-24 lg:px-8">
-            <ul className="grid grid-cols-1 items-center gap-10 sm:grid-cols-3 sm:gap-8">
-              {[
-                {
-                  src: box,
-                  alt: "Front of the Rins & Shine retail box",
-                  cap: "Retail box, front",
-                },
-                {
-                  src: boxBack,
-                  alt: "Back of the Rins & Shine retail box, listing directions, surface compatibility and safety information",
-                  cap: "Retail box, back",
-                },
-                {
-                  src: cloth,
-                  alt: "The branded red microfiber cloth included in the kit",
-                  cap: "Microfiber cloth, 25 × 25 cm",
-                },
-              ].map((im) => (
-                <li key={im.cap}>
-                  <Image
-                    src={im.src}
-                    alt={im.alt}
-                    sizes="(max-width: 640px) 88vw, 340px"
-                    className="mx-auto w-full max-w-[22rem] [filter:drop-shadow(0_20px_34px_rgb(0_0_0/0.6))]"
-                  />
-                  <p className="mt-5 text-center text-xs tracking-[0.14em] text-white/40 uppercase">
-                    {im.cap}
-                  </p>
-                </li>
-              ))}
-            </ul>
           </div>
         </section>
 
-        {/* buy */}
-        <section id="buy" className="scroll-mt-20 bg-paper py-20 lg:py-28">
-          <div className="mx-auto max-w-6xl px-5 lg:px-8">
-            <div className="overflow-hidden rounded-3xl border border-ink/10 bg-bone">
-              <div className="grid gap-10 p-9 sm:p-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center lg:gap-16">
-                <div>
-                  <Eyebrow>Order</Eyebrow>
-                  <h2 className="font-display text-3xl leading-tight font-semibold tracking-tight sm:text-4xl">
-                    The complete kit, {site.price}.
-                  </h2>
-                  <p className="mt-5 max-w-md text-base leading-relaxed text-ash">
-                    Online checkout is on the way. Until then, send us a note and
-                    we&rsquo;ll come straight back with availability, delivery
-                    and payment.
-                  </p>
-                  <p className="mt-4 max-w-md text-sm leading-relaxed text-ash">
-                    {site.tradeNote}
-                  </p>
-                  <div className="mt-8 flex flex-wrap gap-3">
-                    <Button href={ORDER}>Enquire to order</Button>
-                    <Button href={TRADE} tone="outline">
-                      Distributor enquiry
-                    </Button>
-                  </div>
-                </div>
-                <div className="rounded-2xl bg-ink p-8 text-white">
-                  <p className="text-[0.68rem] font-semibold tracking-[0.22em] text-white/50 uppercase">
-                    Paddle Care Kit
-                  </p>
-                  <p className="mt-4 font-display text-4xl font-semibold">
-                    {site.price}
-                  </p>
-                  <p className="mt-2 text-sm text-white/55">{site.priceNote}</p>
-                  <ul className="mt-6 space-y-2 text-sm text-white/75">
-                    <li>Care spray, 100 mL</li>
-                    <li>Microfiber cloth, 25 × 25 cm</li>
-                    <li>Presentation box</li>
-                  </ul>
-                </div>
+        {/* ---------------------------------------------------------- faq */}
+        <section id="faq" className={`scroll-mt-4 bg-mist ${PAD}`}>
+          <div className={`${WRAP} grid items-center gap-14 lg:grid-cols-[0.8fr_1.2fr]`}>
+            <div className="order-2 flex justify-center lg:order-1">
+              <Image
+                src={bottle}
+                alt=""
+                aria-hidden
+                sizes="(max-width: 1024px) 50vw, 280px"
+                className="h-[18rem] w-auto rotate-[-18deg] sm:h-[24rem] lg:h-[28rem]"
+              />
+            </div>
+            <div className="order-1 lg:order-2">
+              <h2 className={H2}>
+                Frequently Asked{" "}
+                <span className="text-accent">Questions</span>
+              </h2>
+              <div className="mt-9">
+                <FaqAccordion items={FAQS} />
               </div>
             </div>
           </div>
         </section>
 
-        {/* faq */}
-        <section id="faq" className="scroll-mt-20 bg-bone py-20 lg:py-28">
-          <div className="mx-auto max-w-3xl px-5 lg:px-8">
-            <Eyebrow>Questions</Eyebrow>
-            <h2 className="font-display text-3xl leading-tight font-semibold tracking-tight sm:text-4xl">
-              Before you order.
-            </h2>
-            <div className="mt-10 divide-y divide-ink/10 border-y border-ink/10">
-              {[
-                {
-                  q: "Is it safe on a raw carbon face?",
-                  a: "Yes. The formula is non-abrasive and made for carbon fiber, composite, polypropylene and textured or grit-based surfaces. It removes contaminants without altering the paddle's manufactured texture.",
-                },
-                {
-                  q: "How often should I use it?",
-                  a: "After each play session. That is what the directions call for, and it takes well under a minute.",
-                },
-                {
-                  q: "Which paddles is it for?",
-                  a: "It is made for modern pickleball paddles, across the carbon, composite and textured surfaces in use today.",
-                },
-                {
-                  q: "How long does one bottle last?",
-                  a: "Each clean needs only two or three light sprays, so a 100 mL can covers months of regular use. The can is good for three years from production.",
-                },
-                {
-                  q: "Can I buy for a club or shop?",
-                  a: "Yes. Send a distributor enquiry with the quantity you have in mind and we will come back with trade pricing.",
-                },
-              ].map((f) => (
-                <details key={f.q} className="group py-5">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-6 font-display text-base font-semibold">
-                    {f.q}
-                    <span
-                      aria-hidden
-                      className="text-brand transition-transform group-open:rotate-45"
+        {/* ------------------------------------------------------ contact */}
+        <section id="contact" className={`scroll-mt-4 bg-white ${PAD}`}>
+          <div className={`${WRAP} grid gap-14 lg:grid-cols-2 lg:gap-16`}>
+            <div>
+              <h2 className={H2}>
+                <span className="text-accent">Enquire</span> With Us
+              </h2>
+              <p className={`mt-5 max-w-[560px] ${LEAD}`}>
+                Buying for yourself, your club or your store? Send us a note and
+                we&rsquo;ll come back with pricing and availability.
+              </p>
+
+              <dl className="mt-10 flex flex-col gap-5 text-[17px]">
+                <div>
+                  <dt className="font-bold text-accent">Company</dt>
+                  <dd className="mt-1 text-ink">
+                    Rins &amp; Shine Pte. Ltd., Singapore
+                  </dd>
+                </div>
+                {site.whatsapp ? (
+                  <div className="flex flex-wrap gap-x-2">
+                    <dt className="font-bold text-accent">WhatsApp</dt>
+                    <dd className="text-ink">{site.whatsapp}</dd>
+                  </div>
+                ) : null}
+                <div className="flex flex-wrap gap-x-2">
+                  <dt className="font-bold text-accent">Email</dt>
+                  <dd>
+                    <a
+                      href={`mailto:${site.email}`}
+                      className="text-ink underline-offset-4 hover:underline"
                     >
-                      +
-                    </span>
-                  </summary>
-                  <p className="mt-3 pr-10 text-sm leading-relaxed text-ash">
-                    {f.a}
-                  </p>
-                </details>
-              ))}
+                      {site.email}
+                    </a>
+                  </dd>
+                </div>
+                <div className="flex flex-wrap gap-x-2">
+                  <dt className="font-bold text-accent">Web</dt>
+                  <dd className="text-ink">www.rinsnshine.com</dd>
+                </div>
+              </dl>
             </div>
+
+            <EnquiryForm />
           </div>
         </section>
       </main>
 
-      {/* footer */}
-      <footer className="bg-ink text-white">
-        <div className="mx-auto max-w-6xl px-5 py-14 lg:px-8">
-          <div className="flex flex-col justify-between gap-8 sm:flex-row sm:items-end">
-            <div>
-              <Wordmark variant="light" />
-              <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/50">
-                {site.company}
-                <br />
-                {site.origin}. {site.made}.
-              </p>
-            </div>
-            <div className="text-sm">
-              <a
-                href={ORDER}
-                className="font-semibold text-white transition-colors hover:text-brand-bright"
-              >
-                {site.email}
-              </a>
-              {site.instagram ? (
-                <a
-                  href={site.instagram}
-                  className="mt-2 block text-white/50 transition-colors hover:text-white"
-                >
-                  Instagram
-                </a>
-              ) : null}
-            </div>
-          </div>
-          <p className="mt-12 border-t border-white/10 pt-6 text-xs text-white/35">
-            &copy; {new Date().getFullYear()} {site.name}. All rights reserved.
-            RINS &amp; SHINE&trade; is a trademark of its owner.
+      {/* -------------------------------------------------------- footer */}
+      <footer className="bg-ink-deep">
+        <div
+          className={`${WRAP} flex flex-wrap items-center justify-between gap-5 py-9`}
+        >
+          <span className="flex items-center gap-2.5 text-white">
+            <Flame size={26} className="text-accent" />
+            <span className="text-[17px] font-extrabold">RINS &amp; SHINE</span>
+          </span>
+          <p className="text-[15px] text-white/55">
+            &copy; {new Date().getFullYear()} Rins &amp; Shine Pte. Ltd. |
+            Formulated and designed in Singapore | Made in China
           </p>
         </div>
       </footer>
@@ -625,13 +515,6 @@ export default function Page() {
             brand: { "@type": "Brand", name: site.name },
             image: [`${site.url}/img/og.jpg`, `${site.url}/img/kit.webp`],
             countryOfOrigin: "SG",
-            offers: {
-              "@type": "Offer",
-              price: site.price.replace(/[^\d.]/g, ""),
-              priceCurrency: "SGD",
-              availability: "https://schema.org/InStock",
-              url: site.url,
-            },
           }),
         }}
       />

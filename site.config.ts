@@ -18,9 +18,17 @@ export const site = {
   priceNote: "per kit — 100 mL spray + microfiber cloth",
   tradeNote: "Distributor, club and bulk pricing on enquiry.",
 
-  // Optional: add a URL to switch the social links on. Leave empty to hide.
+  // Shown in the contact block. Leave a value empty and its row disappears.
+  whatsapp: "", // e.g. "+65 9123 4567"
   instagram: "",
-  whatsapp: "", // e.g. "https://wa.me/6591234567"
+
+  // How quickly the confirmation message promises a reply.
+  responseTime: "one business day",
+
+  // Leave empty and the enquiry form opens the visitor's mail client with
+  // every field already filled in. Set it to a URL that accepts a JSON POST
+  // and the form submits there instead.
+  formEndpoint: "",
 
   origin: "Formulated and Designed in Singapore",
   made: "Made in China",

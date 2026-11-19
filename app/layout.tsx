@@ -1,18 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Source_Sans_3 } from "next/font/google";
 import { site } from "@/site.config";
 import "./globals.css";
 
-const body = Inter({
+const source = Source_Sans_3({
   subsets: ["latin"],
-  variable: "--font-body",
-  display: "swap",
-});
-
-const display = Poppins({
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  variable: "--font-display",
+  weight: ["400", "600", "700", "800"],
+  variable: "--font-source",
   display: "swap",
 });
 
@@ -26,8 +20,7 @@ export const metadata: Metadata = {
   keywords: [
     "paddle cleaner",
     "pickleball paddle cleaner",
-    "padel paddle care",
-    "carbon fibre paddle cleaning spray",
+    "carbon fiber paddle cleaning spray",
     "non-abrasive paddle care",
     "Rins & Shine",
   ],
@@ -52,9 +45,7 @@ export const metadata: Metadata = {
   alternates: { canonical: site.url },
 };
 
-export const viewport: Viewport = {
-  themeColor: "#0a0a0b",
-};
+export const viewport: Viewport = { themeColor: "#0c0a0b" };
 
 export default function RootLayout({
   children,
@@ -62,7 +53,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${body.variable} ${display.variable}`}>
+    <html lang="en" className={source.variable}>
       <body>{children}</body>
     </html>
   );
