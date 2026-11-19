@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0a0a0b;
+  --color-ink-soft: #16161a;
+  --color-ash: #6b6b73;
+  --color-paper: #ffffff;
+  --color-bone: #f6f4f2;
+
+  --color-brand: #c8102e;
+  --color-brand-bright: #e2313d;
+  --color-flame-top: #fc8b3f;
+  --color-flame-bottom: #ee3733;
+
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: var(--font-display), var(--font-body), ui-sans-serif,
+    system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-brand);
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Thin rule used between spec rows */
+.rule { border-color: color-mix(in srgb, currentColor 12%, transparent); }
