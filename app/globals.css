@@ -17,6 +17,25 @@
 
   --font-sans: var(--font-source), system-ui, -apple-system, "Segoe UI", Roboto,
     Helvetica, Arial, sans-serif;
+
+  /* Hero wash, kept as tokens rather than inline in the markup */
+  --hero-glow-warm: rgb(215 25 42 / 0.35);
+  --hero-glow-deep: rgb(90 10 18 / 0.45);
+  --hero-glow-out: rgb(12 10 11 / 0);
+}
+
+.hero-wash {
+  background:
+    radial-gradient(
+      60% 80% at 75% 55%,
+      var(--hero-glow-warm),
+      var(--hero-glow-out) 70%
+    ),
+    radial-gradient(
+      40% 60% at 10% 20%,
+      var(--hero-glow-deep),
+      var(--hero-glow-out) 70%
+    );
 }
 
 html {
@@ -26,6 +45,10 @@ html {
 
 body {
   margin: 0;
+  /* `clip` rather than `hidden`: it stops sideways scrolling without turning
+     the body into a scroll container. The decorative rotated bottles can push
+     a few pixels past the viewport at extreme text sizes. */
+  overflow-x: clip;
   background: #ffffff;
   color: var(--color-ink);
   font-family: var(--font-sans);
@@ -43,9 +66,106 @@ textarea::placeholder {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
+  html {
+    scroll-behavior: auto;
   }
+}
+
+/* Line breaking: balance short headings, keep orphans out of body copy.
+   Applied to specific elements rather than globally, since both cost more
+   than the default greedy algorithm. */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+  /* At large text sizes on a narrow viewport a single long word can be wider
+     than the screen. `anywhere` (rather than `break-word`) also shrinks the
+     intrinsic minimum width, so the grid track it sits in can narrow too,
+     which is what keeps content reachable without sideways scrolling. */
+  overflow-wrap: anywhere;
+}
+
+p,
+li,
+dd {
+  text-wrap: pretty;
+}
+
+/* Email and web addresses are single unbreakable tokens. */
+dd {
+  overflow-wrap: anywhere;
+}
+
+/* Cards and list items are grid or flex children, whose default
+   `min-width: auto` keeps them as wide as their longest word. */
+.card-item {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ---------------------------------------------------------------- details */
+
+.faq summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq[open] summary {
+  border-end-start-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.faq summary .sign-open {
+  display: none;
+}
+
+.faq[open] summary .sign-open {
+  display: inline;
+}
+
+.faq[open] summary .sign-closed {
+  display: none;
+}
+
+/* ------------------------------------------------------------------ forms */
+
+/* Errors stay hidden until the browser decides the field was left invalid.
+   :is() keeps the rule alive in browsers without :user-invalid, where the
+   script supplies the fallback class instead. */
+/* Fields share a row, so the inputs line up along the bottom whether or not
+   the label is followed by a hint. */
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field .field-input {
+  margin-block-start: auto;
+}
+
+.error-msg {
+  display: none;
+}
+
+:is(.field-input:user-invalid, .field-input.user-invalid-fallback) {
+  border-color: var(--color-accent-deep);
+  background-color: rgb(215 25 42 / 0.04);
+}
+
+:is(.field-input:user-invalid, .field-input.user-invalid-fallback)
+  ~ .error-msg {
+  display: flex;
+}
+
+.visually-hidden:where(:not(:focus-within, :active)) {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
 }

@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { site } from "@/site.config";
-import FaqAccordion, { type Faq } from "./faq-accordion";
 import EnquiryForm from "./enquiry-form";
 import {
   Flame,
@@ -22,7 +21,7 @@ import bottle from "@/public/img/bottle-hero.webp";
 
 const WRAP = "mx-auto w-full max-w-[1240px] px-6";
 const PAD = "py-20 sm:py-24 lg:py-28";
-const H2 = "text-[clamp(36px,4vw,54px)] font-extrabold leading-[1.1]";
+const H2 = "text-[clamp(2.25rem,1.35rem+2.5vw,3.375rem)] font-extrabold leading-[1.1]";
 const LEAD = "text-[17px] leading-[1.55] text-body";
 
 const NAV = [
@@ -122,7 +121,7 @@ const COMPAT_RIGHT = [
   },
 ];
 
-const FAQS: Faq[] = [
+const FAQS: { q: string; a: string }[] = [
   {
     q: "Will it change my paddle’s texture or grit?",
     a: "No. The formula is non-abrasive. It removes foreign contaminants sitting on the surface without altering the texture the paddle was made with.",
@@ -161,11 +160,7 @@ export default function Page() {
       <section id="home" className="relative overflow-hidden bg-ink-deep">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(60% 80% at 75% 55%, rgba(215,25,42,0.35), rgba(12,10,11,0) 70%), radial-gradient(40% 60% at 10% 20%, rgba(90,10,18,0.45), rgba(12,10,11,0) 70%)",
-          }}
+          className="hero-wash pointer-events-none absolute inset-0"
         />
 
         <header className={`relative ${WRAP} flex flex-wrap items-center justify-between gap-5 py-7`}>
@@ -195,10 +190,9 @@ export default function Page() {
         <div
           className={`relative ${WRAP} grid items-center gap-12 pt-10 pb-20 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10 lg:pt-12 lg:pb-28`}
         >
-          <div>
-            <h1 className="text-[clamp(44px,5.4vw,72px)] leading-[1.08] font-extrabold text-white">
+          <div className="min-w-0">
+            <h1 className="text-[clamp(2.75rem,1.55rem+3.4vw,4.5rem)] leading-[1.08] font-extrabold text-white">
               <span className="text-accent-bright">Clean</span> Surface,
-              <br />
               Consistent Contact
             </h1>
             <p className="mt-6 max-w-[560px] text-[19px] leading-[1.55] text-white/75">
@@ -214,8 +208,8 @@ export default function Page() {
                 { Icon: Timer, t: "Quick clean" },
               ].map(({ Icon, t }) => (
                 <li key={t} className="flex flex-col items-center gap-3">
-                  <span className="flex h-[72px] w-[72px] items-center justify-center rounded-full border border-accent-bright/45 bg-accent/15">
-                    <Icon size={32} stroke="#FF3B47" />
+                  <span className="flex h-[72px] w-[72px] items-center justify-center rounded-full border border-accent-bright/45 bg-accent/15 text-accent-bright">
+                    <Icon size={32} stroke="currentColor" />
                   </span>
                   <span className="text-[16px] font-semibold text-white">{t}</span>
                 </li>
@@ -235,6 +229,7 @@ export default function Page() {
               src={bottle}
               alt="Rins & Shine Premium Paddle Care Spray, 100 mL"
               priority
+              fetchPriority="high"
               sizes="(max-width: 1024px) 60vw, 340px"
               className="h-[22rem] w-auto sm:h-[30rem] lg:h-[37rem]"
             />
@@ -262,10 +257,10 @@ export default function Page() {
               {BENEFITS.map(({ Icon, h, p }) => (
                 <li
                   key={h}
-                  className="rounded-2xl bg-white px-7 py-11 text-center shadow-[0_18px_40px_rgba(20,20,22,0.09)]"
+                  className="card-item rounded-2xl bg-white px-7 py-11 text-center shadow-[0_18px_40px_rgb(20_20_22/0.09)]"
                 >
-                  <span className="mx-auto mb-6 flex h-[72px] w-[72px] items-center justify-center rounded-full bg-accent">
-                    <Icon size={34} stroke="#FFFFFF" />
+                  <span className="mx-auto mb-6 flex h-[72px] w-[72px] items-center justify-center rounded-full bg-accent text-white">
+                    <Icon size={34} stroke="currentColor" />
                   </span>
                   <h3 className="text-2xl font-bold">{h}</h3>
                   <p className={`mt-3 ${LEAD}`}>{p}</p>
@@ -291,8 +286,8 @@ export default function Page() {
               <ul className="mt-9 flex flex-col gap-4">
                 {CHECKLIST.map((t) => (
                   <li key={t} className="flex items-center gap-4">
-                    <span className="flex h-7 w-7 flex-none items-center justify-center rounded-md bg-accent">
-                      <Tick size={18} stroke="#FFFFFF" />
+                    <span className="flex h-7 w-7 flex-none items-center justify-center rounded-md bg-accent text-white">
+                      <Tick size={18} stroke="currentColor" />
                     </span>
                     <span className="text-[17px] text-ink">{t}</span>
                   </li>
@@ -325,12 +320,12 @@ export default function Page() {
             </div>
             <ul className="mt-14 grid gap-12 text-center sm:grid-cols-3 sm:gap-8">
               {STATS.map((s) => (
-                <li key={s.h}>
-                  <p className="flex items-baseline justify-center gap-2 text-accent">
-                    <span className="text-[clamp(56px,7vw,104px)] leading-none font-extrabold">
+                <li key={s.h} className="min-w-0">
+                  <p className="flex min-w-0 flex-wrap items-baseline justify-center gap-2 [overflow-wrap:anywhere] text-accent">
+                    <span className="text-[clamp(3.5rem,1.9rem+4.4vw,6.5rem)] leading-none font-extrabold">
                       {s.big}
                     </span>
-                    <span className="text-[clamp(20px,2.4vw,36px)] font-bold">
+                    <span className="text-[clamp(1.25rem,0.8rem+1.5vw,2.25rem)] font-bold">
                       {s.unit}
                     </span>
                   </p>
@@ -352,7 +347,7 @@ export default function Page() {
               {STEPS.map((s, i) => (
                 <li
                   key={s.h}
-                  className="rounded-2xl bg-white px-6 py-9 text-center"
+                  className="card-item rounded-2xl bg-white px-6 py-9 text-center"
                 >
                   <span className="mx-auto mb-5 flex h-11 w-11 items-center justify-center rounded-full bg-accent text-[17px] font-bold text-white">
                     {i + 1}
@@ -379,7 +374,7 @@ export default function Page() {
             </div>
 
             <div className="mt-14 grid items-center gap-12 lg:grid-cols-[1fr_auto_1fr] lg:gap-10">
-              <ul className="flex flex-col gap-12 lg:text-right">
+              <ul className="flex flex-col gap-12 lg:text-end">
                 {COMPAT_LEFT.map(({ Icon, h, p }) => (
                   <li key={h}>
                     <span className="inline-flex text-accent lg:justify-end">
@@ -433,8 +428,31 @@ export default function Page() {
                 Frequently Asked{" "}
                 <span className="text-accent">Questions</span>
               </h2>
-              <div className="mt-9">
-                <FaqAccordion items={FAQS} />
+              <div className="mt-9 flex flex-col gap-3">
+                {FAQS.map((f, i) => (
+                  <details key={f.q} name="faq" open={i === 0} className="faq">
+                    <summary className="flex min-h-[72px] items-center gap-4 rounded-xl bg-ink-deep px-6 py-4 text-white transition-colors hover:bg-ink-soft sm:gap-[18px]">
+                      <span className="font-bold text-accent-bright tabular-nums">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <h3 className="flex-1 text-[17px] font-bold sm:text-[19px]">
+                        {f.q}
+                      </h3>
+                      <span
+                        aria-hidden
+                        className="text-2xl leading-none font-bold text-accent-bright"
+                      >
+                        <span className="sign-closed">+</span>
+                        <span className="sign-open">&ndash;</span>
+                      </span>
+                    </summary>
+                    <div className="rounded-b-xl border-x border-b border-line bg-white px-6 py-6">
+                      <p className="text-[17px] leading-[1.55] text-body">
+                        {f.a}
+                      </p>
+                    </div>
+                  </details>
+                ))}
               </div>
             </div>
           </div>

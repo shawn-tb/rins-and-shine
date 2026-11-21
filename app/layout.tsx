@@ -43,6 +43,9 @@ export const metadata: Metadata = {
     apple: [{ url: "/img/apple-icon.png" }],
   },
   alternates: { canonical: site.url },
+  // Opt in to OS-level text scaling. Verified: at 200% the layout reflows at
+  // 390px and 320px wide with no two-dimensional scrolling.
+  other: { "text-scale": "scale" },
 };
 
 export const viewport: Viewport = { themeColor: "#0c0a0b" };
